@@ -5,6 +5,7 @@ import { ecomReducer } from './reducer';
 import ProductList from './components/productList';
 import CartList from './components/cartList';
 import { ADD_TO_CART, ADD_PRODUCTS, UPDATE_PRODUCT_QTY } from './action';
+import axios from 'axios';
 function App() {
   const initialState = {
     cartData: [],
@@ -47,13 +48,26 @@ function App() {
     item.qty -= 1;
     dispatch({ type: UPDATE_PRODUCT_QTY, payload: item })
   }
+  const signUp = async() => {
+    const response = await axios.post('https://api.game1n.live/gamein/api/v1/auth/register', {
+      email: "undefined.kishan@gmail.com",
+      password: "123456",
+    }, {
+      headers: {
+        'Accept': 'application/json',
+        'origin': window.location.origin
+      }
+    })
+    console.log(response);
+  }
   useEffect(() => {
     (async () => await callProductsApi())();
   }, [])
   return (
     <div className="App">
-      {state.productList ? <ProductList products={state?.productList} addToCart={(e) => addToCart(e)} /> : <h1>Loading...</h1>}
-      {state?.cartData ? <CartList cartData={state?.cartData} increaseQty={(e) => increaseQty(e)} decreaseQty={(e) => decreaseQty(e)} /> : <span>EmptyCart</span>}
+    <button onClick={signUp}>Sign up</button>
+      {/* {state.productList ? <ProductList products={state?.productList} addToCart={(e) => addToCart(e)} /> : <h1>Loading...</h1>}
+      {state?.cartData ? <CartList cartData={state?.cartData} increaseQty={(e) => increaseQty(e)} decreaseQty={(e) => decreaseQty(e)} /> : <span>EmptyCart</span>} */}
     </div>
   );
 }
