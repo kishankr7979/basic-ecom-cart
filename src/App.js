@@ -52,6 +52,11 @@ function App() {
     const response = await axios.post('https://api.game1n.live/gamein/api/v1/auth/register', {
       email: "undefined.kishan@gmail.com",
       password: "123456",
+    }, {
+      headers: {
+        'Accept': 'application/json',
+        'origin': window.location.origin
+      }
     })
     console.log(response);
   }
